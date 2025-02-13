@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Remarks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            background-color: #f4f4f4;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: 20px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            margin-bottom: 20px;
+        }
+
+        .user-image {
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .username {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .navigation ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .navigation li {
+            margin: 15px 0;
+        }
+
+        .navigation a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: block;
+            font-size: 16px;
+        }
+
+        .navigation a:hover {
+            background-color: #555;
+            border-left: 4px solid #fff;
+        }
+
+        .nav-title {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #aaa;
+            text-transform: uppercase;
+            cursor: default;
+            user-select: none;
+            margin-bottom: 5px;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 40px;
+            flex: 1;
+            box-sizing: border-box;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto 20px auto;
+        }
+
+        .form-container h1 {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            background-color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #fff;
+        }
+
+        .no-records {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #666;
+            padding: 20px;
+        }
+
+        .profile-link {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .profile-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="user-section">
+            <img src="/static/images/user.png" alt="User Image" class="user-image">
+            <div class="user-details">
+                <div class="username">Admin</div>
+                <a href="/admin_settings" class="profile-link">Profile</a>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <ul>
+                <li class="nav-title">Main Navigation</li>
+                <li><a href="/admin_homepage">Homepage</a></li>
+                <li><a href="/attendance_records">Attendance Records</a></li>
+                <li><a href="/performance_records">Performance Records</a></li>
+                <li><a href="/training_records">Training Records</a></li>
+                <li><a href="/injury_records">Injury Records</a></li>
+                <li><a href="/view_users">View Users</a></li>
+                <li><a href="/add_user">Add User</a></li>
+                <li><a href="/add_remarks">Add Remarks</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="form-container">
+            <h1>Add Remarks</h1>
+            <form action="/add_remarks" method="post">
+                <input type="hidden" name="author_role" value="{{ session['role'] }}">
+                
+                <label for="remark_text">Remark Text:</label>
+                <textarea id="remark_text" name="remark_text" rows="4" required></textarea>
+
+                <label for="target_role">Target Role:</label>
+                <select id="target_role" name="target_role" required>
+                    <option value="AT">Artist</option>
+                    <option value="CH">Coach</option>
+                    <option value="DR">Director</option>
+                </select>
+
+                <button type="submit">Add Remark</button>
+            </form>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Remark Text</th>
+                    <th>Target Role</th>
+                    <th>Created At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if user_remarks|length == 0 %}
+                    <tr>
+                        <td colspan="3" class="no-records">No remarks found.</td>
+                    </tr>
+                {% else %}
+                    {% for remark in user_remarks %}
+                    <tr>
+                        <td>{{ remark['remark_text'] }}</td>
+                        <td>{{ remark['target_role'] }}</td>
+                        <td>{{ remark['created_at'] }}</td>
+                    </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            background-color: #f4f4f4;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: 20px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            margin-bottom: 20px;
+        }
+
+        .user-image {
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .username {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .profile-link {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .profile-link:hover {
+            text-decoration: underline;
+        }
+
+        .navigation ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .navigation li {
+            margin: 15px 0;
+        }
+
+        .navigation a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: block;
+            font-size: 16px;
+        }
+
+        .navigation a:hover {
+            background-color: #555;
+            border-left: 4px solid #fff;
+        }
+
+        .nav-title {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #aaa;
+            text-transform: uppercase;
+            cursor: default;
+            user-select: none;
+            margin-bottom: 5px;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 40px;
+            flex: 1;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .welcome-text {
+            position: relative;
+            margin-top: 270px;
+            padding-left: 20px;
+            text-align: left;
+        }
+
+        .welcome-text h1 {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .welcome-text p {
+            font-size: 18px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .welcome-image {
+            position: absolute;
+            top: 0;
+            left: 250px;
+            width: calc(100% - 250px);
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .welcome-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center -170px;
+            border-radius: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="user-section">
+            <img src="/static/images/user.png" alt="User Image" class="user-image">
+            <div class="user-details">
+                <div class="username">Admin</div>
+                <a href="/admin_settings" class="profile-link">Profile</a>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <ul>
+                <li class="nav-title">Main Navigation</li>
+                <li><a href="/admin_homepage">Homepage</a></li>
+                <li><a href="/attendance_records">Attendance Records</a></li>
+                <li><a href="/performance_records">Performance Records</a></li>
+                <li><a href="/training_records">Training Records</a></li>
+                <li><a href="/injury_records">Injury Records</a></li>
+                <li><a href="/view_users">View Users</a></li>
+                <li><a href="/add_user">Add User</a></li>
+                <li><a href="/add_remarks">Add Remarks</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="content-background"></div>
+        <div class="welcome-image half-image">
+            <img src="/static/images/background.jpg" alt="Performance Image">
+        </div>
+        <div class="welcome-text">
+            <h1>Welcome, Admin!</h1>
+            <p>Dear User, welcome to the Performance and Dance Group User Management System. 
+                Here you can efficiently manage user data.<br><br>
+                This system is designed to streamline administrative tasks, 
+                providing a secure and user-friendly platform for organizing group information. 
+                Whether you need to add new members, review attendance reports, or track injury records, 
+                everything is accessible through the navigation bar on the left.<br><br>
+                Thank you for choosing the Performance and Dance Group User Management System. 
+                We are here to simplify your administrative tasks so you can focus on what matters most – the art of performance and dance!<br><br>
+                If you have any questions or encounter any issues, please feel free to contact our support team!<br><br>
+                Best regards,<br>
+                The Performance and Dance Group Team</p>
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Artists</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: 20px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            margin-bottom: 20px;
+        }
+
+        .user-image {
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .username {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .profile-link {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .profile-link:hover {
+            text-decoration: underline;
+        }
+
+        .navigation ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .navigation li {
+            margin: 15px 0;
+        }
+
+        .navigation a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: block;
+            font-size: 16px;
+        }
+
+        .navigation a:hover {
+            background-color: #555;
+            border-left: 4px solid #fff;
+        }
+
+        .nav-title {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #aaa;
+            text-transform: uppercase;
+            cursor: default;
+            user-select: none;
+            margin-bottom: 5px;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 40px;
+            flex: 1;
+            box-sizing: border-box;
+        }
+
+        .main-content h1 {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        form input[type="text"] {
+            width: 300px;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        form button {
+            padding: 8px 12px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #333;
+            color: white;
+            margin-left: 10px;
+        }
+
+        form button:hover {
+            background-color: #555;
+        }
+
+        table {
+            width: 90%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        td {
+            text-align: center;
+        }
+
+        .no-records {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #666;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="user-section">
+            <img src="/static/images/user.png" alt="User Image" class="user-image">
+            <div class="user-details">
+                <div class="username">Coach</div>
+                <a href="/director_settings" class="profile-link">Profile</a>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <ul>
+                <li class="nav-title">Main Navigation</li>
+                <li><a href="/coach_homepage">Homepage</a></li>
+                <li><a href="/coach_training_records">Training Records</a></li>
+                <li><a href="/coach_view_performance">View Performance Records</a></li>
+                <li><a href="/user_attendance">View Attendance Records</a></li>
+                <li><a href="/coach_view_injury">View Artist Injury Records</a></li>
+                <li><a href="/coach_view_user">View Artist Users</a></li>
+                <li><a href="/coach_view_remarks">View Admin Remarks</a></li>
+                <li><a href="/coach_add_remarks">Add Remarks for Artists</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <h1>View Artists</h1>
+
+        <form method="post" action="/director_view_users">
+            <input type="text" name="search_query" id="search_query" placeholder="Search by name or ID" value="{{ search_query }}">
+            <button type="submit">Search</button>
+            <button type="button" onclick="clearSearch()">Clear</button>
+        </form>
+
+        {% if artists %}
+        <table>
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>First Name</th>
+                    <th>Middle Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Join Date</th>
+                    <th>Address</th>
+                    <th>Emergency Contact Name</th>
+                    <th>Emergency Contact Phone</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for artist in artists %}
+                <tr>
+                    <td>{{ artist.user_id }}</td>
+                    <td>{{ artist.first_name }}</td>
+                    <td>{{ artist.middle_name or 'N/A' }}</td>
+                    <td>{{ artist.last_name }}</td>
+                    <td>{{ artist.email }}</td>
+                    <td>{{ artist.age }}</td>
+                    <td>{{ artist.gender }}</td>
+                    <td>{{ artist.join_date }}</td>
+                    <td>{{ artist.address or 'N/A' }}</td>
+                    <td>{{ artist.emergency_contact_name or 'N/A' }}</td>
+                    <td>{{ artist.emergency_contact_phone or 'N/A' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="no-records">No artists found.</p>
+        {% endif %}
+    </div>
+
+    <script>
+        function clearSearch() {
+            var searchInput = document.getElementById("search_query");
+            if (searchInput) {
+                searchInput.value = '';
+                searchInput.form.submit();
+            }
+        }
+    </script>
+</body>
+</html>

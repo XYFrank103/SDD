@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Records</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            background-color: #f4f4f4;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: 20px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            margin-bottom: 20px;
+        }
+
+        .user-image {
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .username {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .navigation ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .navigation li {
+            margin: 15px 0;
+        }
+
+        .navigation a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: block;
+            font-size: 16px;
+        }
+
+        .navigation a:hover {
+            background-color: #555;
+            border-left: 4px solid #fff;
+        }
+
+        .nav-title {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #aaa;
+            text-transform: uppercase;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 40px;
+            flex: 1;
+            box-sizing: border-box;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto 20px auto;
+        }
+
+        .form-container h1 {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .error-message {
+            color: #d9534f;
+            background-color: #f2dede;
+            border: 1px solid #ebccd1;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 14px;
+            display: none;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], input[type="date"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            background-color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        table {
+            width: 90%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        td form {
+            display: flex;
+            justify-content: center;
+        }
+
+        td form button {
+            width: auto;
+            padding: 5px 10px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+            background-color: #dc3545;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        td form button:hover {
+            background-color: #c82333;
+        }
+
+        .no-records {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #666;
+            padding: 20px;
+        }
+        .profile-link {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .profile-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="user-section">
+            <img src="/static/images/user.png" alt="User Image" class="user-image">
+            <div class="user-details">
+                <div class="username">Admin</div>
+                <a href="/admin_settings" class="profile-link">Profile</a>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <ul>
+                <li class="nav-title">Main Navigation</li>
+                <li><a href="/admin_homepage">Homepage</a></li>
+                <li><a href="/attendance_records">Attendance Records</a></li>
+                <li><a href="/performance_records">Performance Records</a></li>
+                <li><a href="/training_records">Training Records</a></li>
+                <li><a href="/injury_records">Injury Records</a></li>
+                <li><a href="/view_users">View Users</a></li>
+                <li><a href="/add_user" class="active">Add User</a></li>
+                <li><a href="/add_remarks">Add Remarks</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="form-container">
+            <h1>Performance Records</h1>
+            <div id="error-message" class="error-message"></div>
+            <form id="performanceForm" action="/performance_records" method="post" onsubmit="return validateForm();">
+                <label for="artist_id">Artist ID:</label>
+                <input type="text" id="artist_id" name="artist_id" required>
+
+                <label for="director_id">Director ID:</label>
+                <input type="text" id="director_id" name="director_id" required>
+
+                <label for="performance_date">Performance Date:</label>
+                <input type="date" id="performance_date" name="performance_date" required>
+
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" required>
+
+                <label for="remarks">Remarks:</label>
+                <textarea id="remarks" name="remarks" rows="4"></textarea>
+
+                <button type="submit">Add Performance Record</button>
+            </form>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Artist ID</th>
+                    <th>Director ID</th>
+                    <th>Performance Date</th>
+                    <th>Location</th>
+                    <th>Remarks</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if performance_records|length == 0 %}
+                    <tr>
+                        <td colspan="6" style="text-align: center;" class="no-records">No performance records found.</td>
+                    </tr>
+                {% else %}
+                    {% for record in performance_records %}
+                    <tr>
+                        <td>{{ record['artist_id'] }}</td>
+                        <td>{{ record['director_id'] }}</td>
+                        <td>{{ record['performance_date'] }}</td>
+                        <td>{{ record['location'] }}</td>
+                        <td>{{ record['remarks'] }}</td>
+                        <td>
+                            <form action="/delete_performance" method="post">
+                                <input type="hidden" name="performance_id" value="{{ record['id'] }}">
+                                <button type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function validateForm() {
+            const artistId = document.getElementById("artist_id").value.trim();
+            const directorId = document.getElementById("director_id").value.trim();
+            const errorMessage = document.getElementById("error-message");
+
+            const validArtists = ["Artist1", "Artist2", "Artist3"];
+            const validDirectors = ["Director1", "Director2", "Director3"];
+
+            if (!validArtists.includes(artistId)) {
+                errorMessage.innerText = "User ID not found.";
+                errorMessage.style.display = "block";
+                return false;
+            }
+
+            if (!validDirectors.includes(directorId)) {
+                errorMessage.innerText = "User ID not found.";
+                errorMessage.style.display = "block";
+                return false;
+            }
+
+            errorMessage.style.display = "none";
+            return true;
+        }
+    </script>
+</body>
+</html>

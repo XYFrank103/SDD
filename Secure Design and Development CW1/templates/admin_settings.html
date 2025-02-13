@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .settings-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 500px;
+        }
+
+        .settings-container h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .info-display {
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .info-display p {
+            margin: 5px 0;
+        }
+
+        .info-display p strong {
+            color: #333;
+        }
+
+        .change-password-btn {
+            display: block;
+            text-align: center;
+            margin: 10px auto;
+            padding: 10px 15px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            border-radius: 5px;
+            width: calc(100% - 30px);
+            box-sizing: border-box;
+        }
+
+        .change-password-btn:hover {
+            background-color: #555;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin: 10px auto;
+            font-size: 14px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="settings-container">
+        <h1>Profile</h1>
+
+        <div class="info-display">
+            <p><strong>User ID:</strong> {{ admin_info.user_id }}</p>
+            <p><strong>First Name:</strong> {{ admin_info.first_name }}</p>
+            <p><strong>Middle Name:</strong> {{ admin_info.middle_name }}</p>
+            <p><strong>Last Name:</strong> {{ admin_info.last_name }}</p>
+            <p><strong>Email:</strong> {{ admin_info.email }}</p>
+            <p><strong>Age:</strong> {{ admin_info.age }}</p>
+            <p><strong>Gender:</strong> {{ admin_info.gender }}</p>
+            <p><strong>Join Date:</strong> {{ admin_info.join_date }}</p>
+            <p><strong>Address:</strong> {{ admin_info.address }}</p>
+            <p><strong>Emergency Contact Name:</strong> {{ admin_info.emergency_contact_name }}</p>
+            <p><strong>Emergency Contact Phone:</strong> {{ admin_info.emergency_contact_phone }}</p>
+        </div>
+
+        <a href="/admin_change_password" class="change-password-btn">Change Password</a>
+        <a href="/admin_homepage" class="back-link">Back</a>
+    </div>
+</body>
+</html>

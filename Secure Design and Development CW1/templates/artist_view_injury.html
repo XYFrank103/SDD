@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Injury Records</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: 20px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            margin-bottom: 20px;
+        }
+
+        .user-image {
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .username {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .profile-link {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .profile-link:hover {
+            text-decoration: underline;
+        }
+
+        .navigation ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .navigation li {
+            margin: 15px 0;
+        }
+
+        .navigation a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: block;
+            font-size: 16px;
+        }
+
+        .navigation a:hover {
+            background-color: #555;
+            border-left: 4px solid #fff;
+        }
+
+        .nav-title {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #aaa;
+            text-transform: uppercase;
+            cursor: default;
+            user-select: none;
+            margin-bottom: 5px;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 40px;
+            flex: 1;
+            box-sizing: border-box;
+        }
+
+        .main-content h1 {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        table {
+            width: 90%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        td {
+            text-align: center;
+        }
+
+        .no-records {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #666;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="user-section">
+            <img src="/static/images/user.png" alt="User Image" class="user-image">
+            <div class="user-details">
+                <div class="username">Artist</div>
+                <a href="/artist_settings" class="profile-link">Profile</a>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <ul>
+                <li class="nav-title">Main Navigation</li>
+                <li><a href="/artist_homepage">Homepage</a></li>
+                <li><a href="/artist_view_attendance">View Attendance Records</a></li>
+                <li><a href="/artist_view_performance">View Performance Records</a></li>
+                <li><a href="/artist_view_training">View Training Records</a></li>
+                <li><a href="/artist_view_injury">View Injury Records</a></li>
+                <li><a href="/artist_view_remarks">View Remarks</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <h1>View My Injury Records</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Injury ID</th>
+                    <th>User ID</th>
+                    <th>Injury Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if injury_records|length == 0 %}
+                <tr>
+                    <td colspan="3" class="no-records">No injury records found.</td>
+                </tr>
+                {% else %}
+                    {% for record in injury_records %}
+                    <tr>
+                        <td>{{ record.id }}</td>
+                        <td>{{ record.user_id }}</td>
+                        <td>{{ record.injury_date }}</td>
+                    </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

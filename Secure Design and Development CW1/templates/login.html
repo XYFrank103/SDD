@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 300px;
+            text-align: center;
+        }
+
+        .login-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .login-label {
+            display: block;
+            text-align: left;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .login-button:hover {
+            background-color: #555;
+        }
+
+        .error-message {
+            color: #d9534f;
+            background-color: #f2dede;
+            border: 1px solid #ebccd1;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 14px;
+        }
+    </style>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+    <div class="login-container">
+        <h1 class="login-title">Login</h1>
+
+        {% if error_message %}
+        <div id="error-message" class="error-message">{{ error_message }}</div>
+        {% else %}
+        <div id="error-message" class="error-message" style="display: none;"></div>
+        {% endif %}
+
+        <form id="login-form" action="/login" method="post" onsubmit="return validateLoginForm();">
+            <label for="username" class="login-label">Username</label>
+            <input type="text" id="username" name="username" class="login-input" placeholder="Enter your username">
+
+            <label for="password" class="login-label">Password</label>
+            <input type="password" id="password" name="password" class="login-input" placeholder="Enter your password">
+
+            <div class="g-recaptcha" data-sitekey="6Lcn14kqAAAAAEeOryG4gYvD72vqiNrm1F0qKBud"></div>
+            <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+            <button type="submit" class="login-button">Login</button>
+        </form>
+    </div>
+    <script>
+        function validateLoginForm() {
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const recaptcha = grecaptcha.getResponse();
+            const errorMessageDiv = document.getElementById('error-message');
+
+            if (!username || !password || !recaptcha) {
+                errorMessageDiv.innerHTML = 'Username or password is incorrect, or Google verification failed.';
+                errorMessageDiv.style.display = 'block';
+                return false;
+            }
+
+            errorMessageDiv.style.display = 'none';
+            return true;
+        }
+    </script>
+</body>
+</html>

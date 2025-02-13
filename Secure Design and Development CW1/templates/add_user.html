@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add User</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: 20px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            margin-bottom: 20px;
+        }
+
+        .user-image {
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .username {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .navigation ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-title {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #aaa;
+            text-transform: uppercase;
+            cursor: default;
+            user-select: none;
+            margin-bottom: 5px;
+        }
+
+        .navigation li {
+            margin: 15px 0;
+        }
+
+        .navigation a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: block;
+            font-size: 16px;
+        }
+
+        .navigation a:hover {
+            background-color: #555;
+            border-left: 4px solid #fff;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: calc(100% - 250px);
+            padding: 20px;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 700px;
+            width: 100%;
+        }
+
+        .form-container h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .form-group {
+            flex: 1;
+        }
+
+        .password-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .password-input {
+            width: calc(70% - 10px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .password-button {
+            width: 30%;
+        }
+
+        .password-hint {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+            text-align: center;
+        }
+
+        .success-message {
+            color: green;
+            margin-top: 10px;
+            font-size: 14px;
+            text-align: center;
+            display: none;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+            font-size: 14px;
+            text-align: center;
+            display: none;
+        }
+
+        .profile-link {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .profile-link:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="user-section">
+            <img src="/static/images/user.png" alt="User Image" class="user-image">
+            <div class="user-details">
+                <div class="username">Admin</div>
+                <a href="/admin_settings" class="profile-link">Profile</a>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <ul>
+                <li class="nav-title">Main Navigation</li>
+                <li><a href="/admin_homepage">Homepage</a></li>
+                <li><a href="/attendance_records">Attendance Records</a></li>
+                <li><a href="/performance_records">Performance Records</a></li>
+                <li><a href="/training_records">Training Records</a></li>
+                <li><a href="/injury_records">Injury Records</a></li>
+                <li><a href="/view_users">View Users</a></li>
+                <li><a href="/add_user" class="active">Add User</a></li>
+                <li><a href="/add_remarks">Add Remarks</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="form-container">
+            <h1>Add User</h1>
+            <form id="addUserForm" action="/add_user" method="post" onsubmit="return validateForm();">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="first_name">First Name:</label>
+                        <input type="text" id="first_name" name="first_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="last_name">Last Name:</label>
+                        <input type="text" id="last_name" name="last_name">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="middle_name">Middle Name:</label>
+                        <input type="text" id="middle_name" name="middle_name">
+                        <input type="checkbox" id="no_middle_name" name="no_middle_name" value="None" onclick="toggleField('middle_name', this)"> None
+                    </div>
+                    <div class="form-group">
+                        <label for="role">Role:</label>
+                        <select id="role" name="role">
+                            <option value="AT">Artist</option>
+                            <option value="CH">Coach</option>
+                            <option value="DR">Director</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="text" id="email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Age:</label>
+                        <input type="number" id="age" name="age" min="7" max="70">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="gender">Gender:</label>
+                        <select id="gender" name="gender">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address:</label>
+                        <input type="text" id="address" name="address">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="emergency_contact_name">Emergency Contact Name:</label>
+                        <input type="text" id="emergency_contact_name" name="emergency_contact_name">
+                        <input type="checkbox" id="no_emergency_contact_name" name="no_emergency_contact_name" value="None" onclick="toggleField('emergency_contact_name', this)"> None
+                    </div>
+                    <div class="form-group">
+                        <label for="emergency_contact_phone">Emergency Contact Phone:</label>
+                        <input type="text" id="emergency_contact_phone" name="emergency_contact_phone">
+                        <input type="checkbox" id="no_emergency_contact_phone" name="no_emergency_contact_phone" value="None" onclick="toggleField('emergency_contact_phone', this)"> None
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <div class="password-row">
+                            <input type="text" id="password" name="password" class="password-input">
+                            <button type="button" class="password-button" onclick="generateDefaultPassword()">Generate Password</button>
+                        </div>
+                        <p class="password-hint">The password will be reset to the default value: art@group123</p>
+                    </div>
+                </div>
+                <button type="submit">Add User</button>
+            </form>
+            <div id="successMessage" class="success-message" style="display: none;">User added successfully!</div>
+            <div id="errorMessage" class="error-message" style="display: none;">Please fill out all required fields and ensure the email is valid.</div>
+            <div id="emergencyErrorMessage" class="error-message" style="display: none;">For children aged 7-12, an emergency contact name and phone number are required.</div>            
+        </div>
+    </div>
+
+    <script>
+        function toggleField(fieldId, checkbox) {
+            const field = document.getElementById(fieldId);
+            if (checkbox.checked) {
+                field.value = '';
+                field.disabled = true;
+            } else {
+                field.disabled = false;
+            }
+        }
+
+        function generateDefaultPassword() {
+            document.getElementById("password").value = "art@group123";
+        }
+
+        function validateEmail(email) {
+            const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            return re.test(String(email).toLowerCase());
+        }
+
+        document.getElementById("submit-btn").addEventListener("click", function(event) {
+            let ageInput = document.getElementById("age");
+            let age = parseInt(ageInput.value);
+            let errorSpan = document.getElementById("age-error");
+
+            if (isNaN(age) || age < 7 || age > 70) {
+                errorSpan.style.display = "inline";
+                event.preventDefault();
+            } else {
+                errorSpan.style.display = "none";
+            }
+        });
+
+        function validateForm() {
+            let isValid = true;
+            const ageInput = document.getElementById("age");
+            const emergencyName = document.getElementById("emergency_contact_name");
+            const emergencyPhone = document.getElementById("emergency_contact_phone");
+            const emergencyError = document.getElementById("emergencyErrorMessage");
+
+            document.getElementById("successMessage").style.display = "none";
+            document.getElementById("errorMessage").style.display = "none";
+            emergencyError.style.display = "none";
+
+            const age = parseInt(ageInput.value, 10);
+            
+            if (isNaN(age) || age < 7 || age > 70) {
+                isValid = false;
+                document.getElementById("errorMessage").style.display = "block";
+            }
+
+            if (age >= 7 && age <= 12) {
+                if (emergencyName.value.trim() === "" || emergencyPhone.value.trim() === "") {
+                    isValid = false;
+                    emergencyError.style.display = "block";
+                }
+            }
+
+            if (isValid) {
+                document.getElementById("successMessage").style.display = "block";
+            }
+
+            return isValid;
+        }
+    </script>
+</body>
+</html>

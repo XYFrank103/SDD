@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit User</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 600px;
+        }
+
+        .form-container h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .form-group {
+            flex: 1;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], input[type="email"], input[type="number"], select {
+            width: 100%;
+            padding: 8px;
+            font-size: 14px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        .disabled-field {
+            background-color: #e9ecef;
+            color: #6c757d;
+            pointer-events: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        .reset-password-btn {
+            background-color: #d9534f;
+        }
+
+        .reset-password-btn:hover {
+            background-color: #c9302c;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        small {
+            display: block;
+            margin-top: 10px;
+            color: #555;
+            font-size: 12px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Edit User</h1>
+        <form action="{{ url_for('view_users.edit_user', user_id=user.user_id) }}" method="post">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="first_name">First Name:</label>
+                    <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="middle_name">Middle Name:</label>
+                    <input type="text" id="middle_name" name="middle_name"
+                           {% if not user.middle_name or user.middle_name == 'None' %}value="" disabled class="disabled-field"{% else %}value="{{ user.middle_name }}"{% endif %}>
+                    <input type="checkbox" id="no_middle_name" name="no_middle_name" value="None"
+                           {% if not user.middle_name or user.middle_name == 'None' %}checked{% endif %}
+                           onclick="toggleField('middle_name', this)"> None
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value="{{ user.email }}" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age" value="{{ user.age }}" required min="7" max="70">
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender" required>
+                        <option value="Male" {% if user.gender == 'Male' %}selected{% endif %}>Male</option>
+                        <option value="Female" {% if user.gender == 'Female' %}selected{% endif %}>Female</option>
+                        <option value="Other" {% if user.gender == 'Other' %}selected{% endif %}>Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" value="{{ user.address }}">
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="emergency_contact_name">Emergency Contact Name:</label>
+                    <input type="text" id="emergency_contact_name" name="emergency_contact_name"
+                           {% if not user.emergency_contact_name or user.emergency_contact_name == 'None' %}value="" disabled class="disabled-field"{% else %}value="{{ user.emergency_contact_name }}"{% endif %}>
+                    <input type="checkbox" id="no_emergency_contact_name" name="no_emergency_contact_name" value="None"
+                           {% if not user.emergency_contact_name or user.emergency_contact_name == 'None' %}checked{% endif %}
+                           onclick="toggleField('emergency_contact_name', this)"> None
+                </div>
+                <div class="form-group">
+                    <label for="emergency_contact_phone">Emergency Contact Phone:</label>
+                    <input type="text" id="emergency_contact_phone" name="emergency_contact_phone"
+                           {% if not user.emergency_contact_phone or user.emergency_contact_phone == 'None' %}value="" disabled class="disabled-field"{% else %}value="{{ user.emergency_contact_phone }}"{% endif %}>
+                    <input type="checkbox" id="no_emergency_contact_phone" name="no_emergency_contact_phone" value="None"
+                           {% if not user.emergency_contact_phone or user.emergency_contact_phone == 'None' %}checked{% endif %}
+                           onclick="toggleField('emergency_contact_phone', this)"> None
+                </div>
+            </div>
+
+            <button type="submit" name="reset_password" value="1" class="reset-password-btn" onclick="return confirmResetPassword()">Reset to Default Password</button>
+            <small>The password will be reset to the default value: art@group123</small>
+
+            <button type="submit">Update User</button>
+        </form>
+        <a href="/view_users">Back</a>
+    </div>
+
+    <script>
+        let originalValues = {
+            emergency_contact_name: "",
+            emergency_contact_phone: ""
+        };
+
+        function confirmResetPassword() {
+            return confirm("Are you sure you want to reset the password?");
+        }
+
+        function toggleField(fieldId, checkbox) {
+            const field = document.getElementById(fieldId);
+            const age = parseInt(document.getElementById("age").value);
+
+            if (checkbox.checked) {
+                if (age >= 7 && age <= 12) {
+                    alert("For children aged 7-12, an emergency contact is required.");
+                    checkbox.checked = false;
+                    return;
+                }
+                originalValues[fieldId] = field.value;
+                field.value = '';
+                field.disabled = true;
+                field.classList.add('disabled-field');
+            } else {
+                field.disabled = false;
+                field.classList.remove('disabled-field');
+                field.value = originalValues[fieldId] || '';
+            }
+        }
+
+        function validateForm() {
+            const age = parseInt(document.getElementById("age").value);
+            const emergencyName = document.getElementById("emergency_contact_name").value.trim();
+            const emergencyPhone = document.getElementById("emergency_contact_phone").value.trim();
+
+            if (age >= 7 && age <= 12) {
+                if (emergencyName === "" || emergencyPhone === "") {
+                    alert("For children aged 7-12, an emergency contact name and phone number are required.");
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        document.getElementById("age").addEventListener("change", function () {
+            const age = parseInt(this.value);
+            const noEmergencyName = document.getElementById("no_emergency_contact_name");
+            const noEmergencyPhone = document.getElementById("no_emergency_contact_phone");
+
+            if (age >= 7 && age <= 12) {
+                if (noEmergencyName.checked || noEmergencyPhone.checked) {
+                    noEmergencyName.checked = false;
+                    noEmergencyPhone.checked = false;
+                    toggleField("emergency_contact_name", noEmergencyName);
+                    toggleField("emergency_contact_phone", noEmergencyPhone);
+                    alert("For children aged 7-12, an emergency contact is required.");
+                }
+            }
+        });
+    </script>
+</body>
+</html>

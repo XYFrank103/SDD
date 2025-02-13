@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training Records</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            background-color: #f4f4f4;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: 20px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            margin-bottom: 20px;
+        }
+
+        .user-image {
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .username {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .navigation ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .navigation li {
+            margin: 15px 0;
+        }
+
+        .navigation a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: block;
+            font-size: 16px;
+        }
+
+        .navigation a:hover {
+            background-color: #555;
+            border-left: 4px solid #fff;
+        }
+
+        .nav-title {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #aaa;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 40px;
+            flex: 1;
+            box-sizing: border-box;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto 20px auto;
+        }
+
+        .form-container h1 {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], input[type="date"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            background-color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            display: none;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        table {
+            width: 90%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        td {
+            background-color: #fff;
+        }
+
+        .no-records {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #666;
+            padding: 20px;
+        }
+
+        .profile-link {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .profile-link:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="user-section">
+            <img src="/static/images/user.png" alt="User Image" class="user-image">
+            <div class="user-details">
+                <div class="username">Coach</div>
+                <a href="/settings" class="profile-link">Profile</a>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <ul>
+                <li class="nav-title">Main Navigation</li>
+                <li><a href="/coach_homepage">Homepage</a></li>
+                <li><a href="/coach_training_records">Training Records</a></li>
+                <li><a href="/coach_view_performance">View Performance Records</a></li>
+                <li><a href="/user_attendance">View Attendance Records</a></li>
+                <li><a href="/coach_view_injury">View Artist Injury Records</a></li>
+                <li><a href="/coach_view_user">View Artist Users</a></li>
+                <li><a href="/coach_view_remarks">View Admin Remarks</a></li>
+                <li><a href="/coach_add_remarks">Add Remarks for Artists</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="form-container">
+            <h1>Coach Training Records</h1>
+            <div id="error-message" class="error-message"></div>
+            <form action="/coach_training_records" method="post" onsubmit="return validateForm()">
+                <label for="artist_id">Artist ID:</label>
+                <input type="text" id="artist_id" name="artist_id" required>
+
+                <label for="training_date">Training Date:</label>
+                <input type="date" id="training_date" name="training_date" required>
+
+                <label for="remarks">Remarks:</label>
+                <input type="text" id="remarks" name="remarks">
+
+                <button type="submit">Add Training Record</button>
+            </form>
+        </div>
+
+        <h2 style="text-align: center; margin-top: 30px; color: #333;">All Training Records</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Artist ID</th>
+                    <th>Coach ID</th>
+                    <th>Training Date</th>
+                    <th>Remarks</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if training_records|length == 0 %}
+                <tr>
+                    <td colspan="6" class="no-records">No training records found.</td>
+                </tr>
+                {% else %}
+                {% for record in training_records %}
+                <tr>
+                    <td>{{ record.id }}</td>
+                    <td>{{ record.artist_id }}</td>
+                    <td>{{ record.coach_id }}</td>
+                    <td>{{ record.training_date }}</td>
+                    <td>{{ record.remarks }}</td>
+                    <td>
+                        {% if record.coach_id == session.user_id %}
+                        <form action="/delete_coach_training" method="post">
+                            <input type="hidden" name="training_id" value="{{ record.id }}">
+                            <button type="submit">Delete</button>
+                        </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function validateForm() {
+            const artistId = document.getElementById("artist_id").value.trim();
+            const errorMessage = document.getElementById("error-message");
+
+            if (!artistId) {
+                errorMessage.innerText = "User ID cannot be empty.";
+                errorMessage.style.display = "block";
+                return false;
+            }
+
+            if (artistId !== "validUserId") {
+                errorMessage.innerText = "User ID not found.";
+                errorMessage.style.display = "block";
+                return false;
+            }
+
+            errorMessage.style.display = "none";
+            return true;
+        }
+    </script>
+</body>
+</html>
