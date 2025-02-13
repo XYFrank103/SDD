@@ -1,6 +1,3 @@
-# SDD
-SDD Coursework
-
 Selected database software: XAMPP
 
 Make sure the database has been created before running！
