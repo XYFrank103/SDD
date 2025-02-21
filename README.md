@@ -12,7 +12,7 @@ Install bcrypt (for password encryption)：
 
 pip install bcrypt
 
-Installing the MySQL Connection Library：
+Install MySQL Connection Library：
 
 pip install mysql-connector-python
 
