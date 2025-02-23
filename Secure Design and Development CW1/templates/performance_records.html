@@ -284,31 +284,5 @@
             </tbody>
         </table>
     </div>
-
-    <script>
-        function validateForm() {
-            const artistId = document.getElementById("artist_id").value.trim();
-            const directorId = document.getElementById("director_id").value.trim();
-            const errorMessage = document.getElementById("error-message");
-
-            const validArtists = ["Artist1", "Artist2", "Artist3"];
-            const validDirectors = ["Director1", "Director2", "Director3"];
-
-            if (!validArtists.includes(artistId)) {
-                errorMessage.innerText = "User ID not found.";
-                errorMessage.style.display = "block";
-                return false;
-            }
-
-            if (!validDirectors.includes(directorId)) {
-                errorMessage.innerText = "User ID not found.";
-                errorMessage.style.display = "block";
-                return false;
-            }
-
-            errorMessage.style.display = "none";
-            return true;
-        }
-    </script>
 </body>
 </html>

@@ -269,28 +269,5 @@
             </tbody>
         </table>
     </div>
-
-    <script>
-        function validateForm() {
-            const userId = document.getElementById("user_id").value.trim();
-            const errorMessage = document.getElementById("error-message");
-
-            if (!userId) {
-                errorMessage.innerText = "User ID cannot be empty.";
-                errorMessage.style.display = "block";
-                return false;
-            }
-
-            const validUsers = ["User1", "User2", "User3"];
-            if (!validUsers.includes(userId)) {
-                errorMessage.innerText = "User not found.";
-                errorMessage.style.display = "block";
-                return false;
-            }
-
-            errorMessage.style.display = "none";
-            return true;
-        }
-    </script>
 </body>
 </html>

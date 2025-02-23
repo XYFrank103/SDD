@@ -205,7 +205,7 @@
     </div>
 
     <div class="main-content">
-        <h1>Add Remarks for Artists</h1>
+        <h1>View and Add Remarks for Artists</h1>
         <div class="form-container">
             <form action="/director_add_remarks" method="POST">
                 <label for="remark_text">Remark:</label>
@@ -214,28 +214,27 @@
             </form>
         </div>
 
-        <h2 style="text-align: center; margin-top: 30px;">Previous Remarks Sent to Artists</h2>
         <table>
             <thead>
                 <tr>
-                    <th>Remark ID</th>
                     <th>Remark Text</th>
+                    <th>Author Role</th>
                     <th>Created At</th>
                 </tr>
             </thead>
             <tbody>
                 {% if remarks|length == 0 %}
                 <tr>
-                    <td colspan="3" class="no-records">No remarks found.</td>
+                    <td colspan="3" class="no-records">No remarks for artists found.</td>
                 </tr>
                 {% else %}
-                {% for remark in remarks %}
-                <tr>
-                    <td>{{ remark.id }}</td>
-                    <td>{{ remark.remark_text }}</td>
-                    <td>{{ remark.created_at }}</td>
-                </tr>
-                {% endfor %}
+                    {% for remark in remarks %}
+                    <tr>
+                        <td>{{ remark.remark_text }}</td>
+                        <td>{{ remark.author_role }}</td>
+                        <td>{{ remark.created_at }}</td>
+                    </tr>
+                    {% endfor %}
                 {% endif %}
             </tbody>
         </table>
