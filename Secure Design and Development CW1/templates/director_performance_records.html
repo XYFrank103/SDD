@@ -235,15 +235,15 @@
         <div class="form-container">
             <h1>Director Performance Records</h1>
             <div id="error-message" class="error-message"></div>
-            <form id="performance-form" onsubmit="return validateForm()">
+            <form action="/director_performance_records" method="post">
                 <label for="artist_id">Artist ID:</label>
-                <input type="text" id="artist_id" name="artist_id">
+                <input type="text" id="artist_id" name="artist_id" required>
 
                 <label for="performance_date">Performance Date:</label>
-                <input type="date" id="performance_date" name="performance_date">
+                <input type="date" id="performance_date" name="performance_date" required>
 
                 <label for="location">Location:</label>
-                <input type="text" id="location" name="location">
+                <input type="text" id="location" name="location" required>
 
                 <label for="remarks">Remarks:</label>
                 <input type="text" id="remarks" name="remarks">

@@ -28,6 +28,7 @@
             font-size: 24px;
             margin-bottom: 20px;
             text-align: center;
+            color: #333;
         }
 
         .info-display {
@@ -83,13 +84,15 @@
         <div class="info-display">
             <p><strong>User ID:</strong> {{ user_info.user_id }}</p>
             <p><strong>First Name:</strong> {{ user_info.first_name }}</p>
+            <p><strong>Middle Name:</strong> {{ user_info.middle_name or 'N/A' }}</p>
             <p><strong>Last Name:</strong> {{ user_info.last_name }}</p>
-            <p><strong>Role:</strong> {{ user_info.role }}</p>
-            <p><strong>Address:</strong> {{ user_info.address }}</p>
-            <p><strong>Emergency Contact Name:</strong> {{ user_info.emergency_contact_name }}</p>
-            <p><strong>Emergency Contact Phone:</strong> {{ user_info.emergency_contact_phone }}</p>
-            <p><strong>Join Date:</strong> {{ user_info.join_date }}</p>
             <p><strong>Email:</strong> {{ user_info.email }}</p>
+            <p><strong>Age:</strong> {{ user_info.age }}</p>
+            <p><strong>Gender:</strong> {{ user_info.gender }}</p>
+            <p><strong>Join Date:</strong> {{ user_info.join_date }}</p>
+            <p><strong>Address:</strong> {{ user_info.address or 'N/A' }}</p>
+            <p><strong>Emergency Contact Name:</strong> {{ user_info.emergency_contact_name or 'N/A' }}</p>
+            <p><strong>Emergency Contact Phone:</strong> {{ user_info.emergency_contact_phone or 'N/A' }}</p>
         </div>
 
         <a href="/coach_change_password" class="change-password-btn">Change Password</a>

@@ -28,6 +28,7 @@
             font-size: 24px;
             margin-bottom: 20px;
             text-align: center;
+            color: #333;
         }
 
         .info-display {
@@ -83,13 +84,15 @@
         <div class="info-display">
             <p><strong>User ID:</strong> {{ artist_info.user_id }}</p>
             <p><strong>First Name:</strong> {{ artist_info.first_name }}</p>
+            <p><strong>Middle Name:</strong> {{ artist_info.middle_name or 'N/A' }}</p>
             <p><strong>Last Name:</strong> {{ artist_info.last_name }}</p>
-            <p><strong>Role:</strong> {{ artist_info.role }}</p>
-            <p><strong>Address:</strong> {{ artist_info.address }}</p>
-            <p><strong>Emergency Contact Name:</strong> {{ artist_info.emergency_contact_name }}</p>
-            <p><strong>Emergency Contact Phone:</strong> {{ artist_info.emergency_contact_phone }}</p>
-            <p><strong>Join Date:</strong> {{ artist_info.join_date }}</p>
             <p><strong>Email:</strong> {{ artist_info.email }}</p>
+            <p><strong>Age:</strong> {{ artist_info.age or 'N/A' }}</p>
+            <p><strong>Gender:</strong> {{ artist_info.gender or 'N/A' }}</p>
+            <p><strong>Join Date:</strong> {{ artist_info.join_date }}</p>
+            <p><strong>Address:</strong> {{ artist_info.address or 'N/A' }}</p>
+            <p><strong>Emergency Contact Name:</strong> {{ artist_info.emergency_contact_name or 'N/A' }}</p>
+            <p><strong>Emergency Contact Phone:</strong> {{ artist_info.emergency_contact_phone or 'N/A' }}</p>
         </div>
 
         <a href="/artist_change_password" class="change-password-btn">Change Password</a>

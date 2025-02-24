@@ -44,4 +44,4 @@ def director_add_remarks():
         cursor.close()
         cnx.close()
 
-    return render_template('coach_add_remarks.html', remarks=remarks)
+    return render_template('director_add_remarks.html', remarks=remarks)

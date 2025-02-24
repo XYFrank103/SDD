@@ -183,6 +183,30 @@
             text-decoration: underline;
         }
 
+        td {
+            text-align: center; /* 让按钮在表格单元格内居中 */
+        }
+
+        td form {
+            display: inline-block; /* 让表单（包含按钮）在单元格内居中 */
+        }
+
+        td form button {
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+            background-color: #dc3545;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+
+        td form button:hover {
+            background-color: #c82333;
+        }
     </style>
 </head>
 <body>
@@ -258,37 +282,15 @@
                         {% if record.coach_id == session.user_id %}
                         <form action="/delete_coach_training" method="post">
                             <input type="hidden" name="training_id" value="{{ record.id }}">
-                            <button type="submit">Delete</button>
+                            <button type="submit" class="delete-button">Delete</button>
                         </form>
                         {% endif %}
-                    </td>
+                    </td>            
                 </tr>
                 {% endfor %}
                 {% endif %}
             </tbody>
         </table>
     </div>
-
-    <script>
-        function validateForm() {
-            const artistId = document.getElementById("artist_id").value.trim();
-            const errorMessage = document.getElementById("error-message");
-
-            if (!artistId) {
-                errorMessage.innerText = "User ID cannot be empty.";
-                errorMessage.style.display = "block";
-                return false;
-            }
-
-            if (artistId !== "validUserId") {
-                errorMessage.innerText = "User ID not found.";
-                errorMessage.style.display = "block";
-                return false;
-            }
-
-            errorMessage.style.display = "none";
-            return true;
-        }
-    </script>
 </body>
 </html>
